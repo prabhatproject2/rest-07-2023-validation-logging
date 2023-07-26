@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -32,27 +33,29 @@
 
 
   <h2>Registration form</h2>
-  <form action="register" method="post">
+  <form:form modelAttribute="employeeDTO" action="register" method="post">
+   
    
     <div class="form-group">
       <label>employeeName:</label>
-      <input type="text" class="form-control"  name="employeeName">
+      <form:input path="employeeName" type="text" class="form-control"  />
     </div>
      <div class="form-group">
       <label >salary:</label>
-      <input type="number" class="form-control"   name="salary">
+     <form:input path="salary" type="number" class="form-control" />
     </div>
      <div class="form-group">
       <label>emailId:</label>
-      <input type="text" class="form-control"   name="emailId">
+      <form:input path="emailId" type="text" class="form-control" />
+      <form:errors path="emailId" cssClass="text-danger"/>
     </div>
      <div class="form-group">
       <label >Password:</label>
-      <input type="password" class="form-control" name="password">
+      <form:input path="password" type="password" class="form-control"/>
     </div>
    
     <button type="submit" class="btn btn-primary">Register</button>
-  </form>
+  </form:form>
 </div>
 
 

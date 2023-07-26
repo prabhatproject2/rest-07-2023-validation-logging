@@ -2,6 +2,8 @@ package com.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,7 +46,7 @@ public class EmployeeRestController1 {
 	}
 	
 	@PostMapping("/employees")
-	ResponseDTO doRegistration(@RequestBody EmployeeDTO employeeDTO) {
+	ResponseDTO doRegistration(@Valid @RequestBody EmployeeDTO employeeDTO) {
 
 		// System.out.println(employeeEntity);
 

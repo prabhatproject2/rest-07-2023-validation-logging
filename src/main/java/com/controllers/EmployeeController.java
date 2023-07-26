@@ -2,9 +2,12 @@ package com.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,16 +24,21 @@ public class EmployeeController {
 	EmployeeService employeeService;
 
 	@GetMapping("/") // default page
-	String displayRegistrationPage() {
+	String displayRegistrationPage(Model model) {
+		 model.addAttribute("employeeDTO", new EmployeeDTO());
 
 		return "registration";
 
 	}
 
 	@PostMapping("/register")
-	String doRegistration(@ModelAttribute EmployeeDTO employeeDTO) {
-
-		// System.out.println(employeeEntity);
+	String doRegistration(@Valid @ModelAttribute EmployeeDTO employeeDTO,BindingResult bindingResult) {		
+		
+		
+		if (bindingResult.hasErrors()) {
+	    	return "registration";	
+		}
+		
 
 		employeeService.saveEmployee(employeeDTO);
 
