@@ -1,0 +1,30 @@
+==if multiple validations failed for a fielf and you want to concatenate the error messages together then==
+
+ Map<String, String> errors = new HashMap<>();
+	        ex.getBindingResult().getAllErrors().forEach((error) ->{
+	            String fieldName = ((FieldError)error).getField();
+	            String message = error.getDefaultMessage();
+	            
+	            if(errors.containsKey(fieldName)) {//if multiple validation failed for same field
+	            	message=errors.get(fieldName)+" , "+message;
+	            	errors.put(fieldName, message);
+	            	
+	            }	            
+	            
+	            else {
+	            
+	            errors.put(fieldName, message);
+	            }
+	           
+	            
+	        });
+	        
+	        ================================================
+	       
+	        
+	        public class GlobalExceptionHadler extends ResponseEntityExceptionHandler 
+	        
+	         if u do not want to extend ResponseEntityExceptionHandler then use
+	         
+	          @ExceptionHandler(MethodArgumentNotValidException.class) and 
+	          handleMethodArgumentNotValid(MethodArgumentNotValidException ex) //be careful regarding parameters

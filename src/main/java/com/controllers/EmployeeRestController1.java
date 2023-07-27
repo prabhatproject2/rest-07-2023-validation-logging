@@ -48,7 +48,7 @@ public class EmployeeRestController1 {
 	@PostMapping("/employees")
 	ResponseDTO doRegistration(@Valid @RequestBody EmployeeDTO employeeDTO) {
 
-		// System.out.println(employeeEntity);
+		
 
 		employeeService.saveEmployee(employeeDTO);
 		
