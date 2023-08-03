@@ -1,11 +1,13 @@
 package com.services;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +15,7 @@ import com.dao.EmployeeDao;
 import com.dto.EmployeeDTO;
 //import com.dao.EmployeeDao;
 import com.entity.EmployeeEntity;
+import com.exceptions.DuplicateEntryException;
 
 
 @Service
@@ -28,9 +31,18 @@ public class EmployeeServiceImpl implements EmployeeService{
 	public void saveEmployee(EmployeeDTO employeeDTO) {	
 		EmployeeEntity employeeEntity=new EmployeeEntity();
 		BeanUtils.copyProperties(employeeDTO, employeeEntity);		
-		employeeDao.save(employeeEntity);//It is not mandatory to mention this save() in repository(dao interface as it is inbuilt method)			
 		
-	}
+		  try { 
+			  
+			  employeeDao.saveAndFlush(employeeEntity);
+			  
+		  }
+		  
+		  catch(DataIntegrityViolationException ex){
+			  throw new  DuplicateEntryException("email already in db");
+		  
+		  }
+		 }
 	
 	@Override
 	public EmployeeEntity authenticate(String email, String pswd) {		

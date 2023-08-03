@@ -28,3 +28,9 @@
 	         
 	          @ExceptionHandler(MethodArgumentNotValidException.class) and 
 	          handleMethodArgumentNotValid(MethodArgumentNotValidException ex) //be careful regarding parameters
+	          
+	          
+	          ===============================
+	          ex.getMessage() here getMessage is inherited method
+	          
+	          ===========================
