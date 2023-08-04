@@ -2,6 +2,8 @@ package com.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dto.EmployeeDTO;
 import com.entity.EmployeeEntity;
+import com.exceptions.InvalidIdException;
+import com.exceptions.NoRecordFoundException;
 import com.response.ResponseDTO;
 import com.services.EmployeeService;
 
@@ -43,6 +47,12 @@ public class EmployeeRestController2 {
 	@GetMapping("/employees/{employeeId}") //localhost:999/api/v2/employees/2
 	ResponseEntity<EmployeeDTO> findByEmpId(@PathVariable int employeeId){
 		
+		if(employeeId<=0) {
+			
+			throw new InvalidIdException("id can not be 0 or negative");
+			
+		}
+		
 		EmployeeDTO employeeDTO= employeeService.findByEmployeeId(employeeId);	
 		
 		if(employeeDTO!=null) {
@@ -50,14 +60,16 @@ public class EmployeeRestController2 {
 		return new ResponseEntity<>(employeeDTO,HttpStatus.OK);
 		}
 		else {
-			return new ResponseEntity<>(employeeDTO,HttpStatus.NO_CONTENT);
+			
+			throw new NoRecordFoundException("record does not exist");
+			//return new ResponseEntity<>(employeeDTO,HttpStatus.NO_CONTENT);
 		}
 		
 		
 	}
 	
 	@PostMapping("/employees")
-	ResponseEntity<String> doRegistration(@RequestBody EmployeeDTO employeeDTO) {
+	ResponseEntity<String> doRegistration(@Valid @RequestBody EmployeeDTO employeeDTO) {
 
 		// System.out.println(employeeEntity);
 

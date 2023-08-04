@@ -48,7 +48,22 @@ public class GlobalExceptionHadler  {
 	 
 	 
 	 
+	 @ExceptionHandler(InvalidIdException.class)
+	    public ResponseEntity<ErrorDetails> handleInvalidIdException(InvalidIdException ex, WebRequest webRequest) {
+		 ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), webRequest.getDescription(false));
+	                
+	        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+	    }
 	 
 	 
+	 
+	 @ExceptionHandler(NoRecordFoundException.class)
+	    public ResponseEntity<ErrorDetails> handleNoRecordException(NoRecordFoundException ex, WebRequest webRequest) {
+		 ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), webRequest.getDescription(false));
+	         
+		 
+		 //you cannot send a message or any data in the response body when returning HTTP status 204(no_content)
+	        return new ResponseEntity<>(errorDetails,  HttpStatus.NOT_FOUND);
+	    }
 
 }
