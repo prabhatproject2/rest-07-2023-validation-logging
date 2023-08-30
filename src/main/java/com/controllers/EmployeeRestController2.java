@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.MyRunner;
 import com.dto.EmployeeDTO;
 import com.entity.EmployeeEntity;
 import com.exceptions.InvalidIdException;
@@ -28,13 +31,17 @@ import com.services.EmployeeService;
 
 @RequestMapping("/api/v2")
 
+
 public class EmployeeRestController2 {
+	private static final Logger logger=LoggerFactory.getLogger(EmployeeRestController2.class);
 	@Autowired
 	EmployeeService employeeService;
 	
 	 
 	@GetMapping("/employees") //api/v2/employees
 	ResponseEntity<List<EmployeeDTO>>findAllEmployees(){
+		logger.info("going to call service layer from controller");
+		logger.trace("this statement will not run as logging level is DEBUG");
 		
 		//return employeeService.findAllEmployee();
 		
@@ -46,7 +53,8 @@ public class EmployeeRestController2 {
 	
 	@GetMapping("/employees/{employeeId}") //localhost:999/api/v2/employees/2
 	ResponseEntity<EmployeeDTO> findByEmpId(@PathVariable int employeeId){
-		
+		logger.info("going to fetch a particular employee id======"+employeeId);
+		logger.debug(" employee id provided is ======"+employeeId);
 		if(employeeId<=0) {
 			
 			throw new InvalidIdException("id can not be 0 or negative");

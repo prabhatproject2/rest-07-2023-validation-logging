@@ -33,4 +33,6 @@
 	          ===============================
 	          ex.getMessage() here getMessage is inherited method
 	          
-	          ===========================
+	          ===========================	          
+	          
+	          no need to use extra dependecy for default logging
